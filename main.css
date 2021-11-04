@@ -1,0 +1,29 @@
+:root
+{
+	font-family: sans-serif;
+	box-sizing: border-box;
+}
+
+.forecast
+{
+	border: 1px solid black;
+}
+
+.forecast > thead
+{
+	font-weight: bold;
+	background-color: hsl(0, 0%, 23%);
+	text-align: center;
+	color: white;
+}
+
+.forecast td
+{
+	border: 1px solid black;
+	padding: 3px;
+}
+
+.forecast p
+{
+	margin: 2px;
+}
