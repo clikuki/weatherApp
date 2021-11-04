@@ -3,12 +3,89 @@
 <head>
 	<meta charset="UTF-8">
 	<title>WeatherNow</title>
+	<!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&	display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet"> 
+
+	<!-- My CSS and JS -->
 	<script src="./component.js"></script>
 	<script src="./getWeather.js"></script>
 	<script src="./main.js" defer></script>
 	<link rel="stylesheet" href="./main.css">
 </head>
 <body>
-	
+	<header>
+		<img src="./assets/logo.svg" class="logo">
+		<h1 class="brandName">WeatherNow</h1>
+	</header>
+	<main>
+		<div class="curDay-div">
+			<div class="curDay-div--head">
+				<div>
+					<h2 class="city">Cabuyao</h2>
+					<img src="http://openweathermap.org/img/wn/02d@2x.png" alt="few clouds" class="condition">
+				</div>
+				<button class="tempUnitSwitch">°C</button>
+			</div>
+			<div class="curDay-div--info">
+				<div class="label">
+					<span>Temperature:</span>
+					<span>Humidity:</span>
+					<span>Condition:</span>
+					<span>Wind speed:</span>
+				</div>
+				<div class="value">
+					<span>31°C</span>
+					<span>45%</span>
+					<span>Few clouds</span>
+					<span>5.44 m/s</span>
+				</div>
+			</div>
+		</div>
+		<div class="forecast-div">
+			<h2>Forecast</h2>
+			<div class="forecast-cards-container">
+				<div class="forecast-card">
+					<h3 class="day">Monday</h3>
+					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
+					<span class="temp">31°C</span>
+				</div>
+				<div class="forecast-card">
+					<h3 class="day">Tuesday</h3>
+					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
+					<span class="temp">29°C</span>
+				</div>
+				<div class="forecast-card">
+					<h3 class="day">Wednesday</h3>
+					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
+					<span class="temp">30°C</span>
+				</div>
+				<div class="forecast-card">
+					<h3 class="day">Thursday</h3>
+					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
+					<span class="temp">32°C</span>
+				</div>
+				<div class="forecast-card">
+					<h3 class="day">Friday</h3>
+					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
+					<span class="temp">31°C</span>
+				</div>
+				<div class="forecast-card">
+					<h3 class="day">Saturday</h3>
+					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
+					<span class="temp">33°C</span>
+				</div>
+			</div>
+		</div>
+		<div class="credits-div">
+			By:&nbsp;<b>Clikuki</b>
+			<a href="https://github.com/clikuki">
+				<img src="./assets/GitHub-Mark-64px.png" alt="">
+			</a>
+		</div>
+	</main>
 </body>
 </html>

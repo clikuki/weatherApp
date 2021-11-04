@@ -1,29 +1,185 @@
 :root
 {
-	font-family: sans-serif;
-	box-sizing: border-box;
+	--main-bg-clr: #bbf1f5;
+	--header-bg-clr: #7EE1E8;
+	--box-bg-clr: #38eb8083;
+	--circle-clr: #7B979A;
+	--main-font: 'Roboto Condensed', sans-serif;
+	--header-font: 'Prompt', sans-serif;
+	--forecast-card-font: 'Roboto', sans-serif;
+	--main-font-regular: 300;
+	--main-font-bold: 700;
 }
 
-.forecast
+html
 {
+	/* For development cuz
+	idk why the page is larger than size
+	set in responsive move */
+	/* width: 375px;
+	min-height: 812px; */
+}
+
+body
+{
+	background: var(--main-bg-clr);
+	font-family: var(--main-font);
+	margin: 0;
+}
+
+header
+{
+	background-color: var(--header-bg-clr);
+	font-family: var(--header-font);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 15px;
+}
+
+.logo
+{
+	width: 60px;
+}
+
+.brandName
+{
+	margin: 0 0 0 20px;
+	font-size: 40px;
+}
+
+main
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0 20px;
+}
+
+.curDay-div
+{
+	margin-top: 5px;
+	width: 100%;
+}
+
+.tempUnitSwitch
+{
+	top: 0;
+	right: 0;
+	font-family: inherit;
+	font-size: 1.5rem;
+	font-weight: var(--main-font-bold);
+	background-color: var(--box-bg-clr);
 	border: 1px solid black;
+	border-radius: 7px;
+	margin-bottom: 5px;
 }
 
-.forecast > thead
+.curDay-div--head
 {
-	font-weight: bold;
-	background-color: hsl(0, 0%, 23%);
-	text-align: center;
-	color: white;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	border-bottom: 1px solid black;
+	padding: 0 10px;
 }
 
-.forecast td
+.curDay-div--head > div
 {
+	display: flex;
+	align-items: flex-end;
+}
+
+.curDay-div--head .condition
+{
+	height: 40px;
+	margin-right: 50px;
+}
+
+.curDay-div--head .city
+{
+	display: inline-block;
+	margin: 0;
+	margin-right: 10px;
+	font-weight: var(--main-font-regular);
+}
+
+.curDay-div--info
+{
+	padding-top: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.label, .value
+{
+	display: flex;
+	flex-direction: column;
+}
+
+.label
+{
+	align-items: flex-end;
+	margin-right: 10px;
+}
+
+.value
+{
+	font-weight: var(--main-font-bold);
+}
+
+.forecast-div > h2
+{
+	font-weight: var(--main-font-regular);
+	padding-left: 10px;
+	border-bottom: 1px solid black;
+}
+
+.forecast-cards-container
+{
+	display: flex;
+	flex-flow: wrap;
+	justify-content: space-evenly;
+	gap: 10px;
+	padding: 5px;
+}
+
+.forecast-card
+{
+	font-family: var(--forecast-card-font);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 125px;
+	height: 175px;
 	border: 1px solid black;
-	padding: 3px;
+	border-radius: 10px;
+	padding: 10px;
+	background-color: var(--box-bg-clr);
 }
 
-.forecast p
+.forecast-card > h3
 {
-	margin: 2px;
+	margin: 0;
+}
+
+.credits-div
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	background-color: var(--box-bg-clr);
+	border: 1px solid black;
+	border-radius: 10px;
+	margin-top: 5px;
+	padding: 10px;
+	font-size: 28px;
+}
+
+.credits-div img
+{
+	margin-left: 10px;
+	width: 32px;
+	height: auto;
 }
