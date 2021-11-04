@@ -20,17 +20,15 @@
 	<header>
 		<img src="./assets/logo.svg" class="logo">
 		<h1 class="brandName">WeatherNow</h1>
+		<button class="tempUnitSwitch">°C</button>
 	</header>
 	<main>
-		<div class="curDay-div">
-			<div class="curDay-div--head">
-				<div>
-					<h2 class="city">Cabuyao</h2>
-					<img src="http://openweathermap.org/img/wn/02d@2x.png" alt="few clouds" class="condition">
-				</div>
-				<button class="tempUnitSwitch">°C</button>
-			</div>
-			<div class="curDay-div--info">
+		<div class="section currentDay">
+			<h2 class="section-header">
+				Cabuyao
+				<img src="http://openweathermap.org/img/wn/02d@2x.png" alt="few clouds" class="condition">
+			</h2>
+			<div class="section-content">
 				<div class="label">
 					<span>Temperature:</span>
 					<span>Humidity:</span>
@@ -45,9 +43,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="forecast-div">
-			<h2>Forecast</h2>
-			<div class="forecast-cards-container">
+		<div class="section forecast">
+			<h2 class="section-header">Forecast</h2>
+			<div class="section-content forecast-container">
 				<div class="forecast-card">
 					<h3 class="day">Monday</h3>
 					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
@@ -81,11 +79,13 @@
 			</div>
 		</div>
 	</main>
-	<div class="credits-div">
-		By:&nbsp;<b>Clikuki</b>
+	<footer class="credits">
+		By:
+		&nbsp;
 		<a href="https://github.com/clikuki">
+			<b>Clikuki</b>
 			<img src="./assets/GitHub-Mark-64px.png" alt="">
 		</a>
-	</div>
+	</footer>
 </body>
 </html>
