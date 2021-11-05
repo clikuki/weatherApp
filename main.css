@@ -23,8 +23,16 @@ header
 	background-color: var(--header-bg-clr);
 	font-family: var(--header-font);
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 	padding: 10px 15px;
+}
+
+header > *
+{
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 .logo
@@ -34,8 +42,42 @@ header
 
 .brandName
 {
-	margin: 0 0 0 20px;
+	margin: 0;
 	font-size: 3rem;
+}
+
+.searchbar
+{
+	height: 3rem;
+	width: 30rem;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	border: 2px solid black;
+	border-radius: 10px;
+	background: #fff;
+	overflow: hidden;
+}
+
+.searchbar:hover
+{
+	border: 2px solid #077332;
+}
+
+.searchbar img
+{
+	padding: 5px;
+}
+
+.searchbar input
+{
+	flex-grow: 1;
+	height: 50px;
+	min-width: none;
+	border: none;
+	outline: none;
+	font-size: 18px;
+	background: none;
 }
 
 .tempUnitSwitch
@@ -46,43 +88,36 @@ header
 	background-color: var(--box-bg-clr);
 	border: 1px solid black;
 	border-radius: 7px;
-	margin-left: auto;
 }
 
 main
 {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	display: grid;
+	justify-items: center;
+	grid-template-columns: 1fr 1.5fr;
+	grid-template-areas: 
+		"currentDay forecast"
+		"credits 	forecast";
+	gap: 10px;
 	padding: 0 20px;
-}
-
-.section
-{
-	width: 70%;
 }
 
 .section-header
 {
+	text-align: center;
 	font-size: 2rem;
 	padding-left: 10px;
-	border-bottom: 1px solid black;
+	border-bottom: 2px solid black;
+	margin-bottom: 5px;
 	font-weight: var(--main-font-regular);
 }
 
-.currentDay
+.section-content
 {
-	margin-top: 5px;
+	padding: 0 1rem;
 }
 
-.currentDay .condition
-{
-	position: relative;
-	bottom: -10px;
-	height: 3rem;
-	margin-right: 50px;
-}
-
+.currentDay { grid-area: currentDay; }
 .currentDay > .section-content
 {
 	font-size: 1.5rem;
@@ -109,6 +144,11 @@ main
 	font-weight: var(--main-font-bold);
 }
 
+.forecast
+{
+	grid-area: forecast;
+	width: 60%;
+}
 .forecast-container
 {
 	display: flex;
@@ -117,9 +157,7 @@ main
 	gap: 10px;
 	padding: 5px;
 	margin: 0 auto;
-	/* width: min-content;
-	grid-template-columns: repeat(3, 1fr);
-	justify-items: center; */
+	max-width: 25rem;
 }
 
 .forecast-card
@@ -144,8 +182,8 @@ main
 
 .credits
 {
+	grid-area: credits;
 	font-size: 1.5rem;
-	margin: 5px auto;
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -153,8 +191,9 @@ main
 	border: 1px solid black;
 	border-radius: 10px;
 	width: 10rem;
-	margin-top: 5px;
+	height: 3rem;
 	padding: .2em 1.5em;
+	margin-top: auto;
 }
 
 .credits a
