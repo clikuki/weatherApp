@@ -32,11 +32,7 @@
 	</header>
 	<main>
 		<div class="section currentDay">
-			<h2 class="section-header">
-				Cabuyao
-				<!-- img makes section-header go down -->
-				<!-- <img src="http://openweathermap.org/img/wn/02d@2x.png" alt="few clouds" class="condition"> -->
-			</h2>
+			<h2 class="section-header cityDisplay"></h2>
 			<div class="section-content">
 				<div class="label">
 					<span>Temperature:</span>
@@ -45,47 +41,16 @@
 					<span>Wind speed:</span>
 				</div>
 				<div class="value">
-					<span>31°C</span>
-					<span>45%</span>
-					<span>Few clouds</span>
-					<span>5.44 m/s</span>
+					<span class="tempDisplay"></span>
+					<span class="humidityDisplay"></span>
+					<span class="conditionDisplay"></span>
+					<span class="windSpeedDisplay"></span>
 				</div>
 			</div>
 		</div>
 		<div class="section forecast">
 			<h2 class="section-header">Forecast</h2>
-			<div class="section-content forecast-container">
-				<div class="forecast-card">
-					<h3 class="day">Monday</h3>
-					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
-					<span class="temp">31°C</span>
-				</div>
-				<div class="forecast-card">
-					<h3 class="day">Tuesday</h3>
-					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
-					<span class="temp">29°C</span>
-				</div>
-				<div class="forecast-card">
-					<h3 class="day">Wednesday</h3>
-					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
-					<span class="temp">30°C</span>
-				</div>
-				<div class="forecast-card">
-					<h3 class="day">Thursday</h3>
-					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
-					<span class="temp">32°C</span>
-				</div>
-				<div class="forecast-card">
-					<h3 class="day">Friday</h3>
-					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
-					<span class="temp">31°C</span>
-				</div>
-				<div class="forecast-card">
-					<h3 class="day">Saturday</h3>
-					<img class="condition" src="http://openweathermap.org/img/wn/02d@2x.png" alt="Few clouds">
-					<span class="temp">33°C</span>
-				</div>
-			</div>
+			<div class="section-content forecast-container"></div>
 		</div>
 		<div class="credits">
 			<span>By:</span>

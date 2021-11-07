@@ -1,26 +1,29 @@
-const component = (tag, options = {}, children) =>
+const component = (tag, { props, children } = {}) =>
 {
 	const element = document.createElement(tag);
 
-	for(const [key, value] of Object.entries(options))
+	if(props)
 	{
-		switch(key)
+		for(const [key, value] of Object.entries(props))
 		{
-			case 'style':
-				for(const [style, value] of Object.entries(options.style))
-				{
-					element.style[style] = value;
-				}
-				break;
-
-			case 'class':
-				element.classList.add(...value);
-				break;
-
-			default:
-				if(key.match(/^data-/i)) element.setAttribute(key, value);
-				else element[key] = value;
-				break;
+			switch(key)
+			{
+				case 'style':
+					for(const [style, value] of Object.entries(options.style))
+					{
+						element.style[style] = value;
+					}
+					break;
+	
+				case 'class':
+					element.classList.add(...value);
+					break;
+	
+				default:
+					if(typeof value !== 'function') element.setAttribute(key, value);
+					else element[key] = value;
+					break;
+			}
 		}
 	}
 
