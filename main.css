@@ -1,30 +1,32 @@
 :root
 {
-	--main-bg-clr: #bbf1f5;
-	--header-bg-clr: #7EE1E8;
-	--box-bg-clr: #38eb8083;
-	--circle-clr: #7B979A;
+	/* colors */
+	--main-clr: #bbf1f5;
+	--header-clr: #7EE1E8;
+	--box-clr: #38eb8083;
+
+	/* Fonts families and sizes */
 	--main-font: 'Roboto Condensed', sans-serif;
 	--header-font: 'Prompt', sans-serif;
-	--forecast-card-font: 'Roboto', sans-serif;
+	--card-font: 'Roboto', sans-serif;
 	--main-font-regular: 300;
 	--main-font-bold: 700;
 }
 
 body
 {
-	background: var(--main-bg-clr);
-	font-family: var(--main-font);
+	background: var(--main-clr);
 	margin: 0;
 }
 
 header
 {
-	background-color: var(--header-bg-clr);
+	background-color: var(--header-clr);
 	font-family: var(--header-font);
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
+	flex-wrap: wrap;
 	padding: 10px 15px;
 }
 
@@ -48,14 +50,15 @@ header > *
 
 .searchbar
 {
-	height: 3rem;
-	width: 30rem;
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 	gap: 10px;
+	background: #fff;
+	height: 3rem;
+	width: 30rem;
 	border: 2px solid black;
 	border-radius: 10px;
-	background: #fff;
 	overflow: hidden;
 }
 
@@ -64,16 +67,20 @@ header > *
 	border: 2px solid #077332;
 }
 
-.searchbar img
+.searchbar .icon
 {
-	padding: 5px;
+	position: relative;
+	width: 2.5rem;
+	height: 2.5rem;
+	margin: .5rem;
+	background-image: url(./assets/searchIcon.svg);
+	background-size: cover;
 }
 
 .searchbar input
 {
 	flex-grow: 1;
 	height: 50px;
-	min-width: none;
 	border: none;
 	outline: none;
 	font-size: 18px;
@@ -85,13 +92,14 @@ header > *
 	font-family: var(--main-font);
 	font-weight: var(--main-font-bold);
 	font-size: 3rem;
-	background-color: var(--box-bg-clr);
+	background-color: var(--box-clr);
 	border: 1px solid black;
 	border-radius: 7px;
 }
 
 main
 {
+	font-family: var(--main-font);
 	display: grid;
 	justify-items: center;
 	grid-template-columns: 1fr 1.5fr;
@@ -100,6 +108,7 @@ main
 		"credits 	forecast";
 	gap: 10px;
 	padding: 0 20px;
+	margin-bottom: 5px;
 }
 
 .section-header
@@ -117,7 +126,11 @@ main
 	padding: 0 1rem;
 }
 
-.currentDay { grid-area: currentDay; }
+.currentDay {
+	grid-area: currentDay;
+	width: 20rem;
+}
+
 .currentDay > .section-content
 {
 	font-size: 1.5rem;
@@ -147,22 +160,23 @@ main
 .forecast
 {
 	grid-area: forecast;
-	width: 60%;
 }
+
 .forecast-container
 {
+	max-width: 30rem;
+	width: auto;
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
 	gap: 10px;
 	padding: 5px;
 	margin: 0 auto;
-	max-width: 25rem;
 }
 
 .forecast-card
 {
-	font-family: var(--forecast-card-font);
+	font-family: var(--card-font);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -172,12 +186,17 @@ main
 	border: 1px solid black;
 	border-radius: 10px;
 	padding: 10px;
-	background-color: var(--box-bg-clr);
+	background-color: var(--box-clr);
 }
 
-.forecast-card > h3
+.forecast-card > .day
 {
 	margin: 0;
+}
+
+.forecast-card > .condition
+{
+	width: 5rem;
 }
 
 .credits
@@ -187,7 +206,7 @@ main
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
-	background-color: var(--box-bg-clr);
+	background-color: var(--box-clr);
 	border: 1px solid black;
 	border-radius: 10px;
 	width: 10rem;
@@ -211,7 +230,47 @@ main
 
 .credits img
 {
-	margin-left: 10px;
-	width: 32px;
+	margin-left: 1rem;
+	width: 2.5rem;
 	height: auto;
+}
+
+@media only screen and (max-width: 770px)
+{
+	main
+	{
+		grid-template-columns: 1fr;
+		grid-template-areas: 
+			'currentDay'
+			'forecast'
+			'credits';
+	}
+
+	.section
+	{
+		width: 70%;
+	}
+
+	.section-header
+	{
+		text-align: start;
+	}
+}
+
+@media only screen and (max-width: 570px)
+{
+	:root
+	{
+		font-size: 10px;
+	}
+
+	.section
+	{
+		width: 100%;
+	}
+
+	.searchbar input
+	{
+		width: 50%;
+	}
 }
