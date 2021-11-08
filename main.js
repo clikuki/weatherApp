@@ -1,94 +1,103 @@
 let currentWeather = null;
 
-const displayCurrDayInfo = (() =>
+const displayWeatherInfo = (() =>
 {
-	const currentDaySection = document.querySelector('.currentDay');
-	const cityDisplay = currentDaySection.querySelector('.cityDisplay');
-	const tempDisplay = currentDaySection.querySelector('.tempDisplay');
-	const humidityDisplay = currentDaySection.querySelector('.humidityDisplay');
-	const conditionDisplay = currentDaySection.querySelector('.conditionDisplay');
-	const windSpeedDisplay = currentDaySection.querySelector('.windSpeedDisplay');
-
-	return (location, unit, forecastObj) =>
+	const displayCurrDayInfo = (() =>
 	{
-		cityDisplay.textContent = location;
-		tempDisplay.textContent = `${forecastObj.temp.avg}°${unit}`;
-		humidityDisplay.textContent = `${forecastObj.humidity}%`;
-		conditionDisplay.textContent = forecastObj.weather[0].description;
-		windSpeedDisplay.textContent = `${forecastObj.wind.speed}m/s`;
+		const currentDaySection = document.querySelector('.currentDay');
+		const cityDisplay = currentDaySection.querySelector('.cityDisplay');
+		const tempDisplay = currentDaySection.querySelector('.tempDisplay');
+		const humidityDisplay = currentDaySection.querySelector('.humidityDisplay');
+		const conditionDisplay = currentDaySection.querySelector('.conditionDisplay');
+		const windSpeedDisplay = currentDaySection.querySelector('.windSpeedDisplay');
+	
+		return (location, unit, forecastObj) =>
+		{
+			cityDisplay.textContent = location;
+			tempDisplay.textContent = `${forecastObj.temp.avg}°${unit}`;
+			humidityDisplay.textContent = `${forecastObj.humidity}%`;
+			conditionDisplay.textContent = forecastObj.weather[0].description;
+			windSpeedDisplay.textContent = `${forecastObj.wind.speed}m/s`;
+		}
+	})()
+	
+	const createForecastCard = (() =>
+	{
+		const daysMap = [
+			'monday',
+			'tuesday',
+			'wednesday',
+			'thursday',
+			'friday',
+			'saturday',
+			'sunday',
+		]
+	
+		return (unit, forecastObj) =>
+		{
+			const dayDisplay = component('span', {
+				props: {
+					class: 'day',
+				},
+				children: [
+					daysMap[forecastObj.date.getDay()],
+				]
+			})
+		
+			const conditionImg = component('img', {
+				props: {
+					src: `http://openweathermap.org/img/wn/${forecastObj.weather[0].icon}@2x.png`,
+					class: 'condition',
+				}
+			})
+		
+			const tempDisplay = component('span', {
+				children: [
+					`${forecastObj.temp.avg}°${unit}`
+				]
+			})
+		
+			const forecastCard = component('div', {
+				props: {
+					class: 'forecast-card',
+				},
+				children: [
+					dayDisplay,
+					conditionImg,
+					tempDisplay,
+				]
+			})
+		
+			return forecastCard;
+		}
+	})()
+	
+	const clearChildren = (elem) =>
+	{
+		const children = elem.children;
+		while(children[0])
+		{
+			const lastElem = children[children.length - 1];
+			lastElem.remove()
+		}
 	}
+
+	return weather =>
+	{
+		displayCurrDayInfo(weather.location.city, weather.unit, weather.forecast[0]);
+	
+		const forecastContainer = document.querySelector('.forecast-container');
+		const forecastCardElems = weather.forecast.map(day => createForecastCard(weather.unit, day))
+		clearChildren(forecastContainer);
+		forecastContainer.append(...forecastCardElems);
+	};
 })()
 
-const createForecastCard = (() =>
+const fetchAndDisplayWeather = (options) => getWeather(options).then(weather =>
 {
-	const daysMap = [
-		'monday',
-		'tuesday',
-		'wednesday',
-		'thursday',
-		'friday',
-		'saturday',
-		'sunday',
-	]
-
-	return (unit, forecastObj) =>
-	{
-		const dayDisplay = component('span', {
-			props: {
-				class: 'day',
-			},
-			children: [
-				daysMap[forecastObj.date.getDay()],
-			]
-		})
-	
-		const conditionImg = component('img', {
-			props: {
-				src: `http://openweathermap.org/img/wn/${forecastObj.weather[0].icon}@2x.png`,
-				class: 'condition',
-			}
-		})
-	
-		const tempDisplay = component('span', {
-			children: [
-				`${forecastObj.temp.avg}°${unit}`
-			]
-		})
-	
-		const forecastCard = component('div', {
-			props: {
-				class: 'forecast-card',
-			},
-			children: [
-				dayDisplay,
-				conditionImg,
-				tempDisplay,
-			]
-		})
-	
-		return forecastCard;
-	}
-})()
-
-const clearChildren = (elem) =>
-{
-	const children = elem.children;
-	while(children[0])
-	{
-		const lastElem = children[children.length - 1];
-		lastElem.remove()
-	}
-}
-
-const displayWeatherInfo = weather =>
-{
-	displayCurrDayInfo(weather.location.city, weather.unit, weather.forecast[0]);
-
-	const forecastContainer = document.querySelector('.forecast-container');
-	const forecastCardElems = weather.forecast.map(day => createForecastCard(weather.unit, day))
-	clearChildren(forecastContainer);
-	forecastContainer.append(...forecastCardElems);
-};
+	currentWeather = weather;
+	displayWeatherInfo(weather);
+})
 
 const temperature = (() =>
 {
@@ -131,6 +140,22 @@ const temperature = (() =>
 	}
 })()
 
+// Event listeners
+document.querySelector('.searchbar').addEventListener('keydown', e =>
+{
+	if(e.key === 'Enter')
+	{
+		const elem = e.target; 
+		const inputVal = elem.value;
+		elem.value = '';
+
+		fetchAndDisplayWeather({
+			q: inputVal,
+			units: temperature.current().system,
+		});
+	}
+})
+
 document.querySelector('.tempUnitSwitch').addEventListener('click', () =>
 {
 	temperature.toggle();
@@ -138,13 +163,7 @@ document.querySelector('.tempUnitSwitch').addEventListener('click', () =>
 })
 
 // Start
-const options = {
+fetchAndDisplayWeather({
 	q: 'cabuyao',
 	units: temperature.current().system,
-}
-
-getWeather(options).then(weather =>
-	{
-		currentWeather = weather;
-		displayWeatherInfo(weather);
-	})
+})
