@@ -55,12 +55,12 @@ const getWeather = (() =>
 			}
 		}
 
-		const removeDuplicateDays = (forecast) => forecast.filter(getFilterCB()).map(mapCB);
+		const getFormattedDays = (forecast) => forecast.filter(getFilterCB()).map(mapCB);
 
 		const tempLetterMap = {
-			kelvin: 'k',
-			metric: 'c',
-			imperial: 'f',
+			kelvin: 'K',
+			metric: 'C',
+			imperial: 'F',
 		}
 
 		return (obj, unit = 'kelvin') => ({
@@ -69,20 +69,19 @@ const getWeather = (() =>
 				city: obj.city.name,
 				country: obj.city.country,
 			},
-			forecast: removeDuplicateDays(obj.list),
+			forecast: getFormattedDays(obj.list),
 		})
 	})()
 
-	return (paramsObj, isFormatted = true) =>
+	return (paramsObj, logOriginalObj = false) =>
 	{
 		return fetch(getUrl(paramsObj))
 		.then(res => res.json())
 		.then((res) =>
 		{
 			// For testing
-			if(isFormatted) res = format(res, paramsObj.units);
-
-			return res;
+			if(logOriginalObj) console.log(res);
+			return format(res, paramsObj.units);
 		});
 	}
 })()

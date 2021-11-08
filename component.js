@@ -15,10 +15,6 @@ const component = (tag, { props, children } = {}) =>
 					}
 					break;
 	
-				case 'class':
-					element.classList.add(...value);
-					break;
-	
 				default:
 					if(typeof value !== 'function') element.setAttribute(key, value);
 					else element[key] = value;

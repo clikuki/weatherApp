@@ -56,15 +56,10 @@ header > *
 	gap: 10px;
 	background: #fff;
 	height: 3rem;
-	width: 30rem;
+	width: auto;
 	border: 2px solid black;
 	border-radius: 10px;
 	overflow: hidden;
-}
-
-.searchbar:hover
-{
-	border: 2px solid #077332;
 }
 
 .searchbar .icon
@@ -95,6 +90,12 @@ header > *
 	background-color: var(--box-clr);
 	border: 1px solid black;
 	border-radius: 7px;
+	cursor: pointer;
+}
+
+.tempUnitSwitch:active
+{
+	transform: scale(.9);
 }
 
 main
@@ -103,6 +104,7 @@ main
 	display: grid;
 	justify-items: center;
 	grid-template-columns: 1fr 1.5fr;
+	grid-template-rows: repeat(2, 1fr);
 	grid-template-areas: 
 		"currentDay forecast"
 		"credits 	forecast";
@@ -114,6 +116,7 @@ main
 .section-header
 {
 	text-align: center;
+	text-transform: capitalize;
 	font-size: 2rem;
 	padding-left: 10px;
 	border-bottom: 2px solid black;
@@ -129,15 +132,15 @@ main
 .currentDay
 {
 	grid-area: currentDay;
-	width: 20rem;
+	min-width: 20rem;
 }
 
 .currentDay > .section-content
 {
 	font-size: 1.5rem;
 	padding-top: 10px;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	display: flex;
+	justify-content: center;
 	gap: 10px;
 }
 
@@ -156,16 +159,21 @@ main
 .currentDay .value
 {
 	font-weight: var(--main-font-bold);
+	min-width: 50%;
+	white-space: nowrap;
 }
 
 .forecast
 {
+	--width: 30rem;
 	grid-area: forecast;
+	max-width: var(--width);
+	width: auto;
 }
 
 .forecast-container
 {
-	max-width: 30rem;
+	max-width: var(--width);
 	width: auto;
 	display: flex;
 	justify-content: center;
@@ -242,6 +250,7 @@ main
 	main
 	{
 		grid-template-columns: 1fr;
+		grid-template-rows: none;
 		grid-template-areas: 
 			'currentDay'
 			'forecast'
@@ -266,13 +275,18 @@ main
 		font-size: 10px;
 	}
 
+	.searchbar input
+	{
+		width: 50%;
+	}
+
 	.section
 	{
 		width: 100%;
 	}
 
-	.searchbar input
+	.forecast
 	{
-		width: 50%;
+		max-width: none;
 	}
 }
