@@ -93,8 +93,9 @@ const displayWeatherInfo = (() =>
 	};
 })()
 
-const fetchAndDisplayWeather = (options) => getWeather(options).then(weather =>
+const fetchAndDisplayWeather = (options) => getWeather(options, true).then(weather =>
 {
+	if(weather.unit !== temperature.current().letter) weather = temperature.convert(weather);
 	currentWeather = weather;
 	displayWeatherInfo(weather);
 })
@@ -116,26 +117,32 @@ const temperature = (() =>
 
 	let curUnitIndex = 0;
 
+	const convertWeatherObjUnits = (weatherObj) =>
+	{
+		weatherObj.unit = tempUnits[curUnitIndex].letter;
+		for(let i = 0; i < weatherObj.forecast.length; i++)
+		{
+			const weather = weatherObj.forecast[i];
+			const tempObj = weather.temp;
+
+			for(const key in tempObj)
+			{
+				const tempConverter = tempUnits[curUnitIndex].converter;
+				tempObj[key] = tempConverter(tempObj[key]).toFixed(2);
+			}
+		}
+
+		return weatherObj;
+	}
+
 	return {
 		toggle: () => {
 			if(tempUnits.length <= 1) return;
 			if(++curUnitIndex >= tempUnits.length) curUnitIndex = 0;
-			if(currentWeather)
-			{
-				currentWeather.unit = tempUnits[curUnitIndex].letter;
-				for(let i = 0; i < currentWeather.forecast.length; i++)
-				{
-					const weather = currentWeather.forecast[i];
-					const tempObj = weather.temp;
 
-					for(const key in tempObj)
-					{
-						const tempConverter = tempUnits[curUnitIndex].converter;
-						tempObj[key] = tempConverter(tempObj[key]).toFixed(2);
-					}
-				}
-			}
+			return tempUnits[curUnitIndex].letter;
 		},
+		convert: convertWeatherObjUnits,
 		current: () => tempUnits[curUnitIndex],
 	}
 })()
@@ -156,10 +163,14 @@ document.querySelector('.searchbar').addEventListener('keydown', e =>
 	}
 })
 
-document.querySelector('.tempUnitSwitch').addEventListener('click', () =>
+document.querySelector('.tempUnitSwitch').addEventListener('click', e =>
 {
-	temperature.toggle();
-	if(currentWeather) displayWeatherInfo(currentWeather);
+	e.target.textContent = `°${temperature.toggle()}`;
+	if(currentWeather)
+	{
+		currentWeather = temperature.convert(currentWeather);
+		displayWeatherInfo(currentWeather);
+	}
 })
 
 // Start
