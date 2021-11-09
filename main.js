@@ -1,3 +1,4 @@
+// Used for temperature switches
 let curWeather = null;
 
 const displayWeather = (() =>
@@ -88,12 +89,20 @@ const fetchAndDisplayWeather = (options) =>
 {
 	loading.on();
 
-	getWeather(options).then(weather =>
-	{
-		curWeather = weather;
-		displayWeather(weather);
-		loading.off();
-	})
+	return getWeather(options)
+		.then(weather =>
+		{
+			curWeather = weather;
+			displayWeather(weather);
+		})
+		.finally(err =>
+		{
+			loading.off();
+
+			// Check if it is an actual error
+			if(err instanceof Error) return Promise.reject(err);
+			else return Promise.resolve(err);
+		})
 }
 
 const temperature = (() =>
@@ -131,17 +140,18 @@ const temperature = (() =>
 })()
 
 // Event listeners
-document.querySelector('.searchbar').addEventListener('keydown', e =>
+document.querySelector('.searchbar input').addEventListener('keydown', e =>
 {
-	if(e.key === 'Enter')
-	{
-		const elem = e.target; 
-		const inputVal = elem.value;
-		elem.value = '';
+	const elem = e.target; 
+	const inputVal = elem.value;
 
-		fetchAndDisplayWeather({
-			q: inputVal,
-		});
+	elem.setCustomValidity('');
+
+	if(e.key === 'Enter' && inputVal)
+	{
+		fetchAndDisplayWeather({ q: inputVal })
+			.then(() => elem.value = '')
+			.catch(() => elem.setCustomValidity('Invalid city, please enter a valid city'))
 	}
 })
 

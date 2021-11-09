@@ -1,7 +1,9 @@
 const getWeather = (() =>
 {
 	const APIKEY = '305b82757d0362cfa88bd71f44667aeb';
-	const urlBase = 'http://api.openweathermap.org/data/2.5/forecast?';
+	const urlBase = 'https://api.openweathermap.org/data/2.5/forecast?';
+
+	const requestFailPrefix = 'Weather request failed';
 
 	const getUrl = (paramsObj) =>
 	{
@@ -72,12 +74,13 @@ const getWeather = (() =>
 	{
 		return fetch(getUrl(paramsObj))
 		.then(res => res.json())
-		.then((res) =>
+		.then(json =>
 		{
-			// For testing
-			if(logOriginalObj) console.log(res);
-			return format(res, paramsObj.units);
-		});
+			// A sucessfull request will have message prop of 0
+			if(json.message) throw new Error(`${requestFailPrefix}: ${json.message}`);
+			if(logOriginalObj) console.log(json);
+			return format(json, paramsObj.units);
+		})
 	}
 })()
 

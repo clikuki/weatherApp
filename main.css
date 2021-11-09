@@ -70,8 +70,8 @@ header > *
 .searchbar .icon
 {
 	position: relative;
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 2rem;
+	height: 2rem;
 	margin: .5rem;
 	background-image: url(./assets/searchIcon.svg);
 	background-size: cover;
@@ -85,6 +85,12 @@ header > *
 	outline: none;
 	font-size: 18px;
 	background: none;
+}
+
+.searchbar input:invalid
+{
+	color:  red;
+	caret-color: black;
 }
 
 .tempUnitSwitch
@@ -161,6 +167,11 @@ main
 .currentDay .label
 {
 	align-items: flex-end;
+}
+
+.currentDay .label > span::after
+{
+	content: ':';
 }
 
 .currentDay .value
