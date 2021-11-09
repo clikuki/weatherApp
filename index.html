@@ -13,8 +13,10 @@
 	<!-- My CSS and JS -->
 	<script src="./component.js"></script>
 	<script src="./getWeather.js"></script>
+	<script src="./loadingAnim.js" defer></script>
 	<script src="./main.js" defer></script>
 	<link rel="stylesheet" href="./main.css">
+	<link rel="stylesheet" href="./loadingAnim.css">
 </head>
 <body>
 	<header>
@@ -60,5 +62,10 @@
 			</a>
 		</div>
 	</main>
+	<div class="loadingWrapper hide">
+		<svg class="svg" height="100" width="100">
+			<circle class="circle" cx="50" cy="50" r="20"/>
+		</svg> 
+	</div>
 </body>
 </html>

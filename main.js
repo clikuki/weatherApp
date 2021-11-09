@@ -1,4 +1,4 @@
-let currentWeather = null;
+let curWeather = null;
 
 const displayWeather = (() =>
 {
@@ -84,11 +84,17 @@ const displayWeather = (() =>
 
 // Make sure not to pass a temperature option,
 // as temperature must be in kelvin for web app to work
-const fetchAndDisplayWeather = (options) => getWeather(options).then(weather =>
+const fetchAndDisplayWeather = (options) =>
 {
-	currentWeather = weather;
-	displayWeather(weather);
-})
+	loading.on();
+
+	getWeather(options).then(weather =>
+	{
+		curWeather = weather;
+		displayWeather(weather);
+		loading.off();
+	})
+}
 
 const temperature = (() =>
 {
@@ -142,7 +148,7 @@ document.querySelector('.searchbar').addEventListener('keydown', e =>
 document.querySelector('.tempUnitSwitch').addEventListener('click', e =>
 {
 	e.target.textContent = `°${temperature.toggle()}`;
-	if(currentWeather) displayWeather(currentWeather);
+	if(curWeather) displayWeather(curWeather);
 })
 
 // Start
