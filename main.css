@@ -2,7 +2,7 @@
 {
 	/* colors */
 	--main-clr: #bbf1f5;
-	--header-clr: #7EE1E8;
+	--header-clr: #7EE1E880;
 	--box-clr: #38eb8083;
 
 	/* Fonts families and sizes */
@@ -90,7 +90,9 @@ header > *
 	background-color: var(--box-clr);
 	border: 1px solid black;
 	border-radius: 7px;
+	width: 4.5rem;
 	cursor: pointer;
+	transition: transform 10ms ease-out;
 }
 
 .tempUnitSwitch:active
@@ -168,7 +170,6 @@ main
 	--width: 30rem;
 	grid-area: forecast;
 	max-width: var(--width);
-	width: auto;
 }
 
 .forecast-container

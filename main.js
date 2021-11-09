@@ -1,6 +1,6 @@
 let currentWeather = null;
 
-const displayWeatherInfo = (() =>
+const displayWeather = (() =>
 {
 	const displayCurrDayInfo = (() =>
 	{
@@ -14,7 +14,7 @@ const displayWeatherInfo = (() =>
 		return (location, unit, forecastObj) =>
 		{
 			cityDisplay.textContent = location;
-			tempDisplay.textContent = `${forecastObj.temp.avg}°${unit}`;
+			tempDisplay.textContent = temperature.format(forecastObj.temp.avg);
 			humidityDisplay.textContent = `${forecastObj.humidity}%`;
 			conditionDisplay.textContent = forecastObj.weather[0].description;
 			windSpeedDisplay.textContent = `${forecastObj.wind.speed}m/s`;
@@ -53,11 +53,11 @@ const displayWeatherInfo = (() =>
 		
 			const tempDisplay = component('span', {
 				children: [
-					`${forecastObj.temp.avg}°${unit}`
+					temperature.format(forecastObj.temp.avg),
 				]
 			})
 		
-			const forecastCard = component('div', {
+			const forecastCardElem = component('div', {
 				props: {
 					class: 'forecast-card',
 				},
@@ -68,36 +68,26 @@ const displayWeatherInfo = (() =>
 				]
 			})
 		
-			return forecastCard;
+			return forecastCardElem;
 		}
 	})()
-	
-	const clearChildren = (elem) =>
-	{
-		const children = elem.children;
-		while(children[0])
-		{
-			const lastElem = children[children.length - 1];
-			lastElem.remove()
-		}
-	}
 
 	return weather =>
 	{
 		displayCurrDayInfo(weather.location.city, weather.unit, weather.forecast[0]);
 	
-		const forecastContainer = document.querySelector('.forecast-container');
+		const forecastContainerElem = document.querySelector('.forecast-container');
 		const forecastCardElems = weather.forecast.map(day => createForecastCard(weather.unit, day))
-		clearChildren(forecastContainer);
-		forecastContainer.append(...forecastCardElems);
+		forecastContainerElem.replaceChildren(...forecastCardElems);
 	};
 })()
 
-const fetchAndDisplayWeather = (options) => getWeather(options, true).then(weather =>
+// Make sure not to pass a temperature option,
+// as temperature must be in kelvin for web app to work
+const fetchAndDisplayWeather = (options) => getWeather(options).then(weather =>
 {
-	if(weather.unit !== temperature.current().letter) weather = temperature.convert(weather);
 	currentWeather = weather;
-	displayWeatherInfo(weather);
+	displayWeather(weather);
 })
 
 const temperature = (() =>
@@ -106,34 +96,16 @@ const temperature = (() =>
 		{
 			system: 'metric',
 			letter: 'C',
-			converter: (temp) => (temp - 32) * 5/9,
+			convert: (temp) => temp - 273.15,
 		},
 		{
 			system: 'imperial',
 			letter: 'F',
-			converter: (temp) => (temp * 9/5) + 32,
+			convert: (temp) => (temp - 273.15) * 9/5 + 32,
 		},
 	]
 
 	let curUnitIndex = 0;
-
-	const convertWeatherObjUnits = (weatherObj) =>
-	{
-		weatherObj.unit = tempUnits[curUnitIndex].letter;
-		for(let i = 0; i < weatherObj.forecast.length; i++)
-		{
-			const weather = weatherObj.forecast[i];
-			const tempObj = weather.temp;
-
-			for(const key in tempObj)
-			{
-				const tempConverter = tempUnits[curUnitIndex].converter;
-				tempObj[key] = tempConverter(tempObj[key]).toFixed(2);
-			}
-		}
-
-		return weatherObj;
-	}
 
 	return {
 		toggle: () => {
@@ -142,7 +114,12 @@ const temperature = (() =>
 
 			return tempUnits[curUnitIndex].letter;
 		},
-		convert: convertWeatherObjUnits,
+		format: (temp) =>
+		{
+			const curUnit = tempUnits[curUnitIndex];
+			const convertedTemp = curUnit.convert(temp).toFixed(2);
+			return`${convertedTemp}°${curUnit.letter}`;
+		},
 		current: () => tempUnits[curUnitIndex],
 	}
 })()
@@ -158,7 +135,6 @@ document.querySelector('.searchbar').addEventListener('keydown', e =>
 
 		fetchAndDisplayWeather({
 			q: inputVal,
-			units: temperature.current().system,
 		});
 	}
 })
@@ -166,15 +142,10 @@ document.querySelector('.searchbar').addEventListener('keydown', e =>
 document.querySelector('.tempUnitSwitch').addEventListener('click', e =>
 {
 	e.target.textContent = `°${temperature.toggle()}`;
-	if(currentWeather)
-	{
-		currentWeather = temperature.convert(currentWeather);
-		displayWeatherInfo(currentWeather);
-	}
+	if(currentWeather) displayWeather(currentWeather);
 })
 
 // Start
 fetchAndDisplayWeather({
 	q: 'cabuyao',
-	units: temperature.current().system,
 })
