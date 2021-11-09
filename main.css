@@ -11,11 +11,14 @@
 	--card-font: 'Roboto', sans-serif;
 	--main-font-regular: 300;
 	--main-font-bold: 700;
+
+	--bg-clr-transition: background-color .5s ease-in;
 }
 
 body
 {
-	background: var(--main-clr);
+	transition: var(--bg-clr-transition);
+	background-color: var(--main-clr);
 	margin: 0;
 }
 
@@ -26,6 +29,7 @@ body.loading
 
 header
 {
+	transition: var(--bg-clr-transition);
 	background-color: var(--header-clr);
 	font-family: var(--header-font);
 	display: flex;
@@ -89,7 +93,7 @@ header > *
 
 .searchbar input:invalid
 {
-	color:  red;
+	color: red;
 	caret-color: black;
 }
 

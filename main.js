@@ -12,7 +12,7 @@ const displayWeather = (() =>
 		const conditionDisplay = currentDaySection.querySelector('.conditionDisplay');
 		const windSpeedDisplay = currentDaySection.querySelector('.windSpeedDisplay');
 	
-		return (location, unit, forecastObj) =>
+		return (location, forecastObj) =>
 		{
 			cityDisplay.textContent = location;
 			tempDisplay.textContent = temperature.format(forecastObj.temp.avg);
@@ -73,9 +73,85 @@ const displayWeather = (() =>
 		}
 	})()
 
+	const changeBgClr = (() =>
+	{
+		const rootElem = document.documentElement;
+
+		const clrArray = [
+			{
+				// Thunderstorm, Drizzle, Rain
+				idRanges: [
+					[200, 232],
+					[300, 321],
+					[500, 531],
+				],
+				headerClr: '#6a8588',
+				bodyClr: '#526466',
+			},
+			{
+				// Snow
+				idRanges: [
+					[600, 622],
+				],
+				headerClr: '#a3b1bc',
+				bodyClr: '#e8ecf2',
+			},
+			{
+				// Clear, Clouds
+				idRanges: [
+					[800, 804],
+				],
+				headerClr: '#bbf1f5',
+				bodyClr: '#7EE1E8',
+			},
+		]
+
+		// Mist, smoke, haze, etc
+		// Doesn't have any color associated with it
+		const atmosphereRange = [700, 781];
+
+		const getWeatherId = (weatherArray) =>
+		{
+			let index = 0;
+
+			if(weatherArray[0].id >= atmosphereRange[0]
+			&& weatherArray[0].id <= atmosphereRange[1])
+			{
+				index = 1;
+			}
+			
+			return weatherArray[index].id;
+		}
+
+		const getClrs = (weatherId) =>
+		{
+			for(const clrObj of clrArray)
+			{
+				for(const range of clrObj.idRanges)
+				{
+					if(weatherId >= range[0] && weatherId <= range[1])
+					{
+						return clrObj;
+					}
+				}
+			}
+		}
+
+		return (forecastObj) =>
+		{
+			const weatherArray = forecastObj.weather;
+			const weatherId = getWeatherId(weatherArray);
+			const { headerClr, bodyClr } = getClrs(weatherId);
+			
+  			rootElem.style.setProperty('--main-clr', headerClr);
+  			rootElem.style.setProperty('--header-clr', bodyClr);
+		}
+	})()
+
 	return weather =>
 	{
-		displayCurrDayInfo(weather.location.city, weather.unit, weather.forecast[0]);
+		displayCurrDayInfo(weather.location.city, weather.forecast[0]);
+		changeBgClr(weather.forecast[0]);
 	
 		const forecastContainerElem = document.querySelector('.forecast-container');
 		const forecastCardElems = weather.forecast.map(day => createForecastCard(weather.unit, day))
@@ -163,5 +239,5 @@ document.querySelector('.tempUnitSwitch').addEventListener('click', e =>
 
 // Start
 fetchAndDisplayWeather({
-	q: 'cabuyao',
+	q: 'New york',
 })
