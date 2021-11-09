@@ -5,16 +5,11 @@ const getWeather = (() =>
 
 	const getUrl = (paramsObj) =>
 	{
-		let paramStr = `APPID=${APIKEY}`;
-
-		for(const key in paramsObj)
-		{
-			// Allow comma separated values for arrays
-			let value = paramsObj[key];
-			if(Array.isArray(value)) value = value.join(',');
-
-			paramStr += `&${key}=${value}`;
-		}
+		const paramStr = Object.entries(paramsObj).reduce((acc, [key, val]) =>
+			{
+				if(Array.isArray(val)) val = val.join(',');
+				return acc + `&${key}=${val}`;
+			}, `APPID=${APIKEY}`)
 
 		return urlBase + paramStr;
 	}
