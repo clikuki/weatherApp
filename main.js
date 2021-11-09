@@ -47,7 +47,7 @@ const displayWeather = (() =>
 		
 			const conditionImg = component('img', {
 				props: {
-					src: `http://openweathermap.org/img/wn/${forecastObj.weather[0].icon}@2x.png`,
+					src: `https://openweathermap.org/img/wn/${forecastObj.weather[0].icon}@2x.png`,
 					class: 'condition',
 				}
 			})
