@@ -1,71 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>WeatherNow</title>
-	<!-- Google Fonts -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap" rel="stylesheet"> 
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&	display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet"> 
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>WeatherNow</title>
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&	display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+			rel="stylesheet"
+		/>
 
-	<!-- My CSS and JS -->
-	<script src="./component.js"></script>
-	<script src="./getWeather.js"></script>
-	<script src="./loadingAnim.js" defer></script>
-	<script src="./main.js" defer></script>
-	<link rel="stylesheet" href="./main.css">
-	<link rel="stylesheet" href="./loadingAnim.css">
-</head>
-<body>
-	<header>
-		<div>
-			<img src="./assets/logo.svg" class="logo">
-			<h1 class="brandName">WeatherNow</h1>
-		</div>
-		<div>
-			<div class="searchbar">
-				<div class="icon"></div>
-				<input type="text" placeholder="eg. New York">
+		<!-- My CSS and JS -->
+		<script src="./component.js"></script>
+		<script src="./getWeather.js"></script>
+		<script src="./loadingAnim.js" defer></script>
+		<script src="./main.js" defer></script>
+		<link rel="stylesheet" href="./main.css" />
+		<link rel="stylesheet" href="./loadingAnim.css" />
+	</head>
+	<body>
+		<header>
+			<div>
+				<img src="./assets/logo.svg" class="logo" />
+				<h1 class="brandName">WeatherNow</h1>
 			</div>
-			<button class="tempUnitSwitch">°C</button>
-		</div>
-	</header>
-	<main>
-		<div class="section currentDay">
-			<h2 class="section-header cityDisplay">City</h2>
-			<div class="section-content">
-				<div class="label">
-					<span>Temperature</span>
-					<span>Humidity</span>
-					<span>Condition</span>
-					<span>Wind speed</span>
+			<div>
+				<div class="searchbar">
+					<div class="icon"></div>
+					<input type="text" placeholder="eg. New York" />
 				</div>
-				<div class="value">
-					<span class="tempDisplay"></span>
-					<span class="humidityDisplay"></span>
-					<span class="conditionDisplay"></span>
-					<span class="windSpeedDisplay"></span>
+				<button class="tempUnitSwitch">°C</button>
+			</div>
+		</header>
+		<main>
+			<div class="section currentDay">
+				<h2 class="section-header cityDisplay">City</h2>
+				<div class="section-content">
+					<div class="label">
+						<span>Temperature</span>
+						<span>Humidity</span>
+						<span>Condition</span>
+						<span>Wind speed</span>
+					</div>
+					<div class="value">
+						<span class="tempDisplay"></span>
+						<span class="humidityDisplay"></span>
+						<span class="conditionDisplay"></span>
+						<span class="windSpeedDisplay"></span>
+					</div>
 				</div>
 			</div>
+			<div class="section forecast">
+				<h2 class="section-header">Forecast</h2>
+				<div class="section-content forecast-container"></div>
+			</div>
+			<div class="credits">
+				<span>By:</span>
+				<a href="https://github.com/clikuki">
+					<b>Clikuki</b>
+					<img src="./assets/GitHub-Mark-64px.png" alt="" />
+				</a>
+			</div>
+		</main>
+		<div class="loadingWrapper hide">
+			<svg class="svg" height="100" width="100">
+				<circle class="circle" cx="50" cy="50" r="20" />
+			</svg>
 		</div>
-		<div class="section forecast">
-			<h2 class="section-header">Forecast</h2>
-			<div class="section-content forecast-container"></div>
-		</div>
-		<div class="credits">
-			<span>By:</span>
-			<a href="https://github.com/clikuki">
-				<b>Clikuki</b>
-				<img src="./assets/GitHub-Mark-64px.png" alt="">
-			</a>
-		</div>
-	</main>
-	<div class="loadingWrapper hide">
-		<svg class="svg" height="100" width="100">
-			<circle class="circle" cx="50" cy="50" r="20"/>
-		</svg> 
-	</div>
-</body>
+	</body>
 </html>
